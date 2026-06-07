@@ -1,0 +1,5 @@
+# Paper and submission files
+paper/
+
+# macOS
+.DS_Store

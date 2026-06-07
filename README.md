@@ -190,6 +190,16 @@ Follow this order to understand and deploy BuildStream:
 
 ---
 
+## Preprint paper
+
+A preprint describing the architecture and the ephemeral code-signing credential
+pattern is available in [paper/](paper/) — see [paper/main.pdf](paper/main.pdf)
+(LaTeX source: [paper/main.tex](paper/main.tex)).
+
+> **BuildStream: A Reproducible AWS-Native Reference Architecture for Mobile CI/CD with Ephemeral Code-Signing Credentials.** Santosh Kumar Puppala. Preprint (not peer reviewed).
+
+---
+
 ## Author
 
 **Santosh Kumar Puppala**  

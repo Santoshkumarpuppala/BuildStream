@@ -18,7 +18,42 @@ BuildStream eliminates these problems by providing a complete, automated, and re
 
 ## Architecture
 
-![BuildStream Architecture](docs/architecture.png)
+```mermaid
+flowchart TB
+    GH["GitHub\nSource + Webhooks"]
+
+    subgraph VPC["AWS VPC (10.0.0.0/16)"]
+        direction TB
+        subgraph PUB["Public Subnet"]
+            JENKINS["Jenkins Controller\nAmazon Linux 2, EC2"]
+        end
+        subgraph PRIV["Private Subnet"]
+            MAC["EC2 Mac Dedicated Hosts\nmac1.metal — iOS + Android"]
+        end
+    end
+
+    LIB["mobile-lib\nShared Pipeline Library"]
+    SECRETS["AWS Secrets Manager\nCerts + Keystores"]
+    S3["Amazon S3\nVersioned Artifacts"]
+    TF["TestFlight\niOS Distribution"]
+    GP["Google Play\nAndroid Distribution"]
+
+    subgraph MON["Monitoring + Alerting"]
+        direction LR
+        CWA["CloudWatch Agent\nMetrics + Logs"] --> CWALARM["CloudWatch Alarms\nCPU, Disk, Status"]
+        CWALARM --> SNS["SNS Topic\nmyhub-alerts"]
+        SNS --> EMAIL["Email\nNotifications"]
+    end
+
+    GH --> JENKINS
+    LIB --> JENKINS
+    JENKINS --> MAC
+    SECRETS --> MAC
+    MAC --> S3
+    S3 --> TF
+    S3 --> GP
+    VPC -.-> CWA
+```
 
 The system consists of six layers:
 
